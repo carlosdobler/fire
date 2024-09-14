@@ -5,10 +5,10 @@ execute:
   echo: false
 ---
 
-Carlos Dobler
-Research Scientist
-Woodwell Climate Research Center
-September, 2024
+Carlos Dobler  
+Research Scientist  
+Woodwell Climate Research Center  
+September, 2024  
 
 
 This report shows results of a model trained to predict fire occurrence as a function of monthly vapor pressure deficit (VPD; from ERA5) and aboveground biomass (from ORNL). The model consists of a logistic regression with both predictors set up as interacting terms. It was trained on six partially overlapping spatial windows that together cover the whole CONUS. The rationale for training the model on a per-window basis was so that it could capture different fire regimes across the country. Once trained, predictions from different windows are stitched together applying a weighted average on overlapping areas, with weights being based on the distance to the center of windows.

@@ -1,6 +1,8 @@
 # VPD-based Fire Risk Model
 
-Carlos Dobler Research Scientist Woodwell Climate Research Center
+Carlos Dobler  
+Research Scientist  
+Woodwell Climate Research Center  
 September, 2024
 
 This report shows results of a model trained to predict fire occurrence
