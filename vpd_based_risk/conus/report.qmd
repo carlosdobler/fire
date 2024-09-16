@@ -207,6 +207,7 @@ dates <-
   unname() %>% 
   as_date()
 
+set.seed(1)
 d <- 
   dates[month(dates) %in% c(6,7,8)] %>% 
   sample(1)
@@ -225,7 +226,7 @@ s %>%
                                                guide = guide_colorbar(barwidth = 0.6)) +
   coord_equal() +
   theme(axis.title = element_blank()) +
-  labs(title = str_sub(d, end = 7))
+  labs(caption = str_sub(d, end = 7))
 
  
 ```
@@ -259,10 +260,12 @@ f %>%
                                                na.value = "transparent",
                                                trans = "sqrt",
                                                name = "fire\nevents\n",
+                                               limits = c(0,50),
+                                               labels = c(seq(0,40,10), ">50"),
                                                guide = guide_colorbar(barwidth = 0.6)) +
   coord_equal() +
   theme(axis.title = element_blank()) +
-  labs(title = str_sub(d, end = 7))
+  labs(caption = str_sub(d, end = 7))
   
 
 ```
@@ -275,6 +278,7 @@ Same as above, but for the winter season (DJF):
 #| fig-height: 3
 #| out-width: 60%
 
+set.seed(222)
 d <- 
   dates[month(dates) %in% c(12,1,2)] %>% 
   sample(1)
@@ -293,7 +297,7 @@ s %>%
                                                guide = guide_colorbar(barwidth = 0.6)) +
   coord_equal() +
   theme(axis.title = element_blank()) +
-  labs(title = str_sub(d, end = 7))
+  labs(caption = str_sub(d, end = 7))
 
 ```
 
@@ -327,10 +331,12 @@ f %>%
                                                na.value = "transparent",
                                                trans = "sqrt",
                                                name = "fire\nevents\n",
+                                               limits = c(0,30),
+                                               labels = c(seq(0,20,10), ">30"),
                                                guide = guide_colorbar(barwidth = 0.6)) +
   coord_equal() +
   theme(axis.title = element_blank()) +
-  labs(title = str_sub(d, end = 7))
+  labs(caption = str_sub(d, end = 7))
 
 ```
 
