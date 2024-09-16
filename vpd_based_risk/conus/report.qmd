@@ -149,7 +149,7 @@ Overall AUC (area under the curve): `r round(mean(tb_roc$.estimate), 2)`.
 
 .
 
-The figure below shows how accuracy changes across land cover classes for each window:
+The figure below shows the accuracy of the model per land cover class for each window:
 
 ```{r}
 #| fig-width: 7
@@ -202,9 +202,18 @@ s <-
   suppressMessages() %>% 
   do.call(c, .)
 
+dates <- 
+  st_get_dimension_values(s, "time") %>% 
+  unname() %>% 
+  as_date()
+
+d <- 
+  dates[month(dates) %in% c(6,7,8)] %>% 
+  sample(1)
+
 s %>% 
-  filter(month(time) %in% c(6,7,8)) %>% 
-  slice(time, sample(60,1)) %>% 
+  filter(time == d) %>% 
+  adrop() %>% 
   as_tibble() %>% 
   ggplot(aes(lon, lat, fill = prob_fire)) +
   geom_raster() +
@@ -215,10 +224,49 @@ s %>%
                                                name = "p(fire)\n",
                                                guide = guide_colorbar(barwidth = 0.6)) +
   coord_equal() +
-  theme(axis.title = element_blank())
+  theme(axis.title = element_blank()) +
+  labs(title = str_sub(d, end = 7))
 
  
 ```
+
+Below are the number of fire events registered by the MOD14A2 product for the same month:
+```{r}
+#| fig-width: 6
+#| fig-height: 3
+#| out-width: 60%
+
+f <- 
+  str_glue("{dir_data}/ignitions") %>% 
+  fs::dir_ls() %>%
+  str_subset(str_glue("{str_pad(month(d), 2, 'left', '0')}_{year(d)}.")) %>% 
+  read_stars() %>% 
+  setNames("fire") %>% 
+  st_warp(s %>% slice(time, 1))
+  
+f[is.na(s %>% slice(time, 1))] <- NA  
+  
+f <- 
+  f %>% 
+  as_tibble()
+
+
+f %>% 
+  ggplot(aes(lon,lat,fill = fire)) +
+  geom_raster() +
+  colorspace::scale_fill_continuous_sequential("viridis", 
+                                               rev = F,
+                                               na.value = "transparent",
+                                               trans = "sqrt",
+                                               name = "fire\nevents\n",
+                                               guide = guide_colorbar(barwidth = 0.6)) +
+  coord_equal() +
+  theme(axis.title = element_blank()) +
+  labs(title = str_sub(d, end = 7))
+  
+
+```
+
 
 Same as above, but for the winter season (DJF):
 
@@ -227,9 +275,13 @@ Same as above, but for the winter season (DJF):
 #| fig-height: 3
 #| out-width: 60%
 
+d <- 
+  dates[month(dates) %in% c(12,1,2)] %>% 
+  sample(1)
+
 s %>% 
-  filter(month(time) %in% c(12,1,2)) %>% 
-  slice(time, sample(60,1)) %>% 
+  filter(time == d) %>% 
+  adrop() %>% 
   as_tibble() %>% 
   ggplot(aes(lon, lat, fill = prob_fire)) +
   geom_raster() +
@@ -240,7 +292,45 @@ s %>%
                                                name = "p(fire)\n",
                                                guide = guide_colorbar(barwidth = 0.6)) +
   coord_equal() +
-  theme(axis.title = element_blank())
+  theme(axis.title = element_blank()) +
+  labs(title = str_sub(d, end = 7))
+
+```
+
+...and MOD14A2 for the same month:
+
+```{r}
+#| fig-width: 6
+#| fig-height: 3
+#| out-width: 60%
+
+f <- 
+  str_glue("{dir_data}/ignitions") %>% 
+  fs::dir_ls() %>%
+  str_subset(str_glue("{str_pad(month(d), 2, 'left', '0')}_{year(d)}.")) %>% 
+  read_stars() %>% 
+  setNames("fire") %>% 
+  st_warp(s %>% slice(time, 1))
+  
+f[is.na(s %>% slice(time, 1))] <- NA  
+  
+f <- 
+  f %>% 
+  as_tibble()
+
+
+f %>% 
+  ggplot(aes(lon,lat,fill = fire)) +
+  geom_raster() +
+  colorspace::scale_fill_continuous_sequential("viridis", 
+                                               rev = F,
+                                               na.value = "transparent",
+                                               trans = "sqrt",
+                                               name = "fire\nevents\n",
+                                               guide = guide_colorbar(barwidth = 0.6)) +
+  coord_equal() +
+  theme(axis.title = element_blank()) +
+  labs(title = str_sub(d, end = 7))
 
 ```
 

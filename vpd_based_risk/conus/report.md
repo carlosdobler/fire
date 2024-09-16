@@ -49,7 +49,7 @@ Overall AUC (area under the curve): 0.78.
 
 .
 
-The figure below shows how accuracy changes across land cover classes
+The figure below shows the accuracy of the model per land cover class
 for each window:
 
 <img src="report_files/figure-commonmark/unnamed-chunk-4-1.png"
@@ -63,13 +63,24 @@ occurrence (p(fire)) for a random month in the summer season (JJA):
 <img src="report_files/figure-commonmark/unnamed-chunk-5-1.png"
 style="width:60.0%" />
 
-Same as above, but for the winter season (DJF):
+Below are the number of fire events registered by the MOD14A2 product
+for the same month:
 
 <img src="report_files/figure-commonmark/unnamed-chunk-6-1.png"
+style="width:60.0%" />
+
+Same as above, but for the winter season (DJF):
+
+<img src="report_files/figure-commonmark/unnamed-chunk-7-1.png"
+style="width:60.0%" />
+
+…and MOD14A2 for the same month:
+
+<img src="report_files/figure-commonmark/unnamed-chunk-8-1.png"
 style="width:60.0%" />
 
 The map below shows the probability of p(fire) \> 0.9 on the 20 years
 used for training:
 
-<img src="report_files/figure-commonmark/unnamed-chunk-7-1.png"
+<img src="report_files/figure-commonmark/unnamed-chunk-9-1.png"
 style="width:60.0%" />
